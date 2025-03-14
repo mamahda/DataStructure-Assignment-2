@@ -31,8 +31,6 @@ void print(head number) {
 }
 
 void summm(head *sum, head *carry, int n1, int n2) {
-  n1 = n1 >= 0 ? n1 : 0;
-  n2 = n2 >= 0 ? n2 : 0;
   int total = n1 + n2 + carry->first->num;
   int digit = total % 10;
   int newCarry = total / 10;
@@ -51,8 +49,8 @@ void operation(head number1, head number2) {
   node *second = number2.first;
 
   while (first != NULL || second != NULL) {
-    int num1 = first->num;
-    int num2 = second->num;
+    int num1 = (first ? first->num : 0);
+    int num2 = (second ? second->num : 0);
 
     summm(&sum, &carry, num1, num2);
 
@@ -63,9 +61,14 @@ void operation(head number1, head number2) {
   if (carry.first->num > 0) {
     insert(&sum, carry.first->num);
   }
-
-  printf("Result: ");
-  print(sum);
+  printf("---------------------------------------");
+  printf("\nHasil penjumlahan: ");
+  node *print = sum.first;
+  while (print != NULL) {
+    printf("%d", print->num);
+    print = print->next;
+  }
+  printf("\n");
 }
 
 int main() {
@@ -83,7 +86,7 @@ int main() {
   while ((input = getchar()) != '\n' && input != EOF) {
     insert(&number2, input - '0');
   }
-
+  printf("---------------------------------------\n");
   printf("Angka pertama: ");
   print(number1);
   printf("Angka kedua: ");
